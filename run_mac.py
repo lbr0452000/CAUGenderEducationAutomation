@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+
+# run_mac.spec파일에는 datas=[('chromedriver_mac', '.')] 설정이 되어야합니다.
+
 from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -21,16 +24,17 @@ html = driver.page_source
 soup = BeautifulSoup(html, 'html.parser')
 
 for url in soup.find_all("a", {"class":"button icon play"}):
-    url = url["onclick"].replace("Javascript: open_cwindow('course', '/gen_edu.php?mid=m03&pact=course&uid=", "")
-    url = url.replace("', 0,0,800,650,0,0,0,1,1); return false;", "")
-    url = "https://genderedu.cau.ac.kr/gen_edu.php?mid=m03&pact=course&uid="+url
+    if(url.text!="재수강"):
+        url = url["onclick"].replace("Javascript: open_cwindow('course', '/gen_edu.php?mid=m03&pact=course&uid=", "")
+        url = url.replace("', 0,0,800,650,0,0,0,1,1); return false;", "")
+        url = "https://genderedu.cau.ac.kr/gen_edu.php?mid=m03&pact=course&uid="+url
 
-    driver.execute_script('window.open("'+url+'","_blank");')
-    driver.switch_to.window(driver.window_handles[len(driver.window_handles)-1])
-    driver.find_element_by_tag_name("iframe").send_keys(" ")
+        driver.execute_script('window.open("'+url+'","_blank");')
+        driver.switch_to.window(driver.window_handles[len(driver.window_handles)-1])
+        driver.find_element_by_tag_name("iframe").send_keys(" ")
 
-    WebDriverWait(driver, 400).until(EC.alert_is_present())
+        WebDriverWait(driver, 400).until(EC.alert_is_present())
 
-    alert = driver.switch_to.alert
-    alert.accept()
-    driver.switch_to.window(driver.window_handles[0])
+        alert = driver.switch_to.alert
+        alert.accept()
+        driver.switch_to.window(driver.window_handles[0])

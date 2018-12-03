@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+#spec파일에는
 from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
